@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Locations</title>
+    <script src="../database/MainDataBase.js"></script>
     <link rel="stylesheet" href="../ui-files/font-usage.css">
     <link rel="stylesheet" href="../ui-files/variables.css">
     <link rel="stylesheet" href="../components/components.css">
@@ -76,6 +77,8 @@
 
         .data{
             padding: 10px;
+            padding-left: 0;
+            padding-right: 0;
         }
 
         .data_text{
@@ -132,12 +135,20 @@
         }
 
         .clothin_activity .data ul li{
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 18px;
             color: var(--On-Surface);
-            background-color: var(--Surface-Container);
+            background-color: var(--Surface-Container-Low);
             border-radius: 10px;
             padding: 15px;
+        }
+
+        .clothin_activity .data ul li:first-child{
+            border-radius: 18px 18px 10px 10px;
+        }
+
+        .clothin_activity .data ul li:last-child{
+            border-radius: 10px 10px 18px 18px;
         }
 
         .clothin_activity .data .data_text{
@@ -165,14 +176,14 @@
 
 <body style="background-color: var(--Surface);">
 <div class="header">
-    <p>Clothing and Activity</p>
+    <p data-translate="clothing_activity">Clothing and Activity</p>
     <span id="location_name">Error</span>
 </div>
 <md-tabs id="change_type_tabs">
-    <md-primary-tab>Morning</md-primary-tab>
-    <md-primary-tab>Evening</md-primary-tab>
-    <md-primary-tab>Night</md-primary-tab>
-    <md-primary-tab>Day tip</md-primary-tab>
+    <md-primary-tab data-translate="morning">Morning</md-primary-tab>
+    <md-primary-tab data-translate="evening">Evening</md-primary-tab>
+    <md-primary-tab data-translate="night">Night</md-primary-tab>
+    <md-primary-tab data-translate="day_tip">Day tip</md-primary-tab>
 
 </md-tabs>
 <div class="wrap_data">
@@ -205,6 +216,87 @@
 </div>
 
 <script>
+
+function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    return {
+        r: (bigint >> 16) & 255,
+        g: (bigint >> 8) & 255,
+        b: bigint & 255
+    };
+}
+
+function rgbToHsl({ r, g, b }) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0; // Achromatic
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return { h: h * 360, s: s * 100, l: l * 100 };
+}
+
+async function CreateMaterialYouTheme(hex) {
+    const colors = {
+        orange_material: "#FFA500",
+        red_material: "#FF0000",
+        pink_material: "#FFC0CB",
+        purple_material: "#800080",
+        blue_material: "#0000FF",
+        yellow_material: "#FFFF00",
+        green_material: "#008000"
+    };
+
+    const targetHsl = rgbToHsl(hexToRgb(hex));
+    let closestColor = null;
+    let smallestHueDifference = Infinity;
+
+    for (const [color, colorHex] of Object.entries(colors)) {
+        const colorHsl = rgbToHsl(hexToRgb(colorHex));
+        const hueDifference = Math.abs(targetHsl.h - colorHsl.h);
+
+        if (hueDifference < smallestHueDifference) {
+            smallestHueDifference = hueDifference;
+            closestColor = color;
+        }
+    }
+
+ if(localStorage.getItem("useDynamicColors") && localStorage.getItem("useDynamicColors") === "false"){
+        if (await customStorage.getItem("customTheme")) {
+      document.documentElement.setAttribute(
+        "Theme",
+        await customStorage.getItem("customTheme")
+      );
+            sendThemeToAndroid(
+        `${document.documentElement.getAttribute("Theme")}_Scrolled`
+      );
+    }
+  } else{
+  document.documentElement.setAttribute('Theme', closestColor);
+  sendThemeToAndroid(`${closestColor}_ScrollFalse`);
+  }
+}
+
+        function sendThemeToAndroid(theme) {
+
+            AndroidInterface.updateStatusBarColor(theme);
+        };
+
 
 setTimeout(() =>{
     document.querySelector('.loader_cloth').hidden = true;

@@ -244,7 +244,7 @@ function GetWeatherLabel(iconCode, isDay) {
             removeRain()
             removeFog()
             removeSnow()
-            removeLeaves()
+            displayLeaves()
             removeStars()
             removeThunder()}
             return 'partly_cloudy'
@@ -527,7 +527,7 @@ function GetWeatherLabel(iconCode, isDay) {
             removeFog()
             removeSnow()
             removeLeaves()
-            removeStars()
+            displayStars()
             removeThunder()}
             return 'partly_cloudy'
 
@@ -804,7 +804,7 @@ function setOnlineIcons() {
 
     sunnyFrog = [
         "https://gitlab.com/bignutty/google-weather-icons/-/raw/main/froggie/v2/mobile/01-sunny/01-sunny-creek-swimming.png?ref_type=heads",
-        "https://gitlab.com/bignutty/google-weather-icons/-/raw/main/froggie/v2/mobile/01-sunny/01-sunny-field-kite.png?ref_type=heads",
+        "https://gitlab.com/bignutty/google-weather-icons/-/raw/main/froggie/v2/mobile/01-sunny/01-sunny-home-laundry_c.png?ref_type=heads",
         "https://gitlab.com/bignutty/google-weather-icons/-/raw/main/froggie/v2/mobile/01-sunny/01-sunny-orchard-picking.png?ref_type=heads",
         "https://gitlab.com/bignutty/google-weather-icons/-/raw/main/froggie/v2/mobile/01-sunny/01-sunny-home-laundry_f.png?ref_type=heads"
     ];
@@ -1786,67 +1786,80 @@ function getWeatherLabelInLangNoAnimText(iconCode, isDay, langCode) {
 
 
 
+let currentInterval = null; // Track the current interval
 
 function animateTemp(temp_value) {
     const SelectedTempUnit = localStorage.getItem('SelectedTempUnit');
+    const useTempAnimation = localStorage.getItem('useTempAnimation');
 
+    // Adjust the starting point to 75% of the target value or 0, whichever is higher
     let targetNum = temp_value;
-    let currentNum = 0;
+    let currentNum = Math.max(Math.floor(targetNum * 0.75), 0); // Start closer to the target
     let baseSpeed = 50;
 
-    if (SelectedTempUnit === 'fahrenheit') {
-        currentNum = 100
+    const tempElement = document.getElementById('temp');
 
-    } else {
-        currentNum = 0
-
-    }
-
+    // Set initial opacity to 0
+    tempElement.style.scale = 0.7;
 
     function animateNumber() {
-        if(localStorage.getItem('useTempAnimation') === 'false'){
-            document.getElementById('temp').innerHTML = temp_value + '°';
-        } else{
-        let interval = setInterval(() => {
+        if (useTempAnimation === 'false') {
+            tempElement.innerHTML = temp_value + '°';
+            tempElement.style.scale = 1;  // Ensure opacity is 1 when no animation is used
+        } else {
+            // Clear any existing interval to prevent overlapping animations
+            if (currentInterval) {
+                clearInterval(currentInterval);
+            }
 
-            if (currentNum > targetNum) {
-                currentNum--;
-                document.getElementById('temp').innerHTML = currentNum + '°';
+            currentInterval = setInterval(() => {
+                if (currentNum > targetNum) {
+                    currentNum--;
+                    tempElement.innerHTML = currentNum + '°';
 
-                if (currentNum <= targetNum + 5 && currentNum > targetNum) {
-                    clearInterval(interval);
+                    if (currentNum <= targetNum + 5 && currentNum > targetNum) {
+                        clearInterval(currentInterval);
 
-                    interval = setInterval(() => {
-                        if (currentNum > targetNum) {
-                            currentNum--;
-                            document.getElementById('temp').innerHTML = currentNum + '°';
-                        } else {
-                            clearInterval(interval);
-                        }
-                    }, baseSpeed * 4);
+                        currentInterval = setInterval(() => {
+                            if (currentNum > targetNum) {
+                                currentNum--;
+                                tempElement.innerHTML = currentNum + '°';
+                            } else {
+                                clearInterval(currentInterval);
+                            }
+                        }, baseSpeed * 4);
+                    }
+                } else if (currentNum < targetNum) {
+                    currentNum++;
+                    tempElement.innerHTML = currentNum + '°';
+
+                    if (currentNum >= targetNum - 5 && currentNum < targetNum) {
+                        clearInterval(currentInterval);
+
+                        currentInterval = setInterval(() => {
+                            if (currentNum < targetNum) {
+                                currentNum++;
+                                tempElement.innerHTML = currentNum + '°';
+                            } else {
+                                clearInterval(currentInterval);
+                            }
+                        }, baseSpeed * 4);
+                    }
+                } else {
+                    clearInterval(currentInterval);
                 }
-                // If the targetNum is positive, increment the currentNum
-            } else if (currentNum < targetNum) {
-                currentNum++;
-                document.getElementById('temp').innerHTML = currentNum + '°';
+            }, baseSpeed);
+        }
 
-                if (currentNum >= targetNum - 5 && currentNum < targetNum) {
-                    clearInterval(interval);
-
-                    interval = setInterval(() => {
-                        if (currentNum < targetNum) {
-                            currentNum++;
-                            document.getElementById('temp').innerHTML = currentNum + '°';
-                        } else {
-                            clearInterval(interval);
-                        }
-                    }, baseSpeed * 4);
-                }
+        // Animate opacity to 1
+        let opacityInterval = setInterval(() => {
+            let currentOpacity = parseFloat(tempElement.style.scale);
+            if (currentOpacity < 1) {
+                tempElement.style.scale = currentOpacity + 0.05;
             } else {
-                clearInterval(interval);
+                clearInterval(opacityInterval);
             }
         }, baseSpeed);
-    }
     }
 
     animateNumber();

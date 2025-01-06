@@ -7,10 +7,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 public class WidgetProviderSquare extends AppWidgetProvider {
     private static final String PREFS_NAME = "WeatherWidgetPrefsSquare";
+
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -22,7 +26,6 @@ public class WidgetProviderSquare extends AppWidgetProvider {
         String mainTemp = prefs.getString("mainTemp", "--°");
         String iconData = prefs.getString("iconData", "cloudy");
         String highLow = prefs.getString("highLow", "--");
-        String LocationName = prefs.getString("locationWeather", "--");
 
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widgets_weather_square);

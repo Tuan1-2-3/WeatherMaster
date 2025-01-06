@@ -20,7 +20,7 @@
 
 
 body {
-  background-color: var(--Secondary-Container);
+  background-color: var(--Surface);
   padding: 0;
   margin: 0;
   overflow: hidden;
@@ -28,6 +28,10 @@ body {
   transition: opacity 0.3s ease-out;
   opacity: 0;
 
+}
+
+body.loaded{
+  background-color: var(--Secondary-Container);
 }
 
 
@@ -170,7 +174,7 @@ touch_search{
   padding-left: 15px;
   padding-top: 10px;
   padding-right: 15px;
-      z-index: 1;
+      z-index: 2;
             position: relative;
 
 }
@@ -231,6 +235,9 @@ touch_search{
 }
 
 
+.froggie img{
+  width: 120%;
+}
 
 @media screen and (min-width: 410px){
   .disc_main p{
@@ -239,6 +246,10 @@ touch_search{
 
   .left_current_weather .temp_img p{
     font-size: 70px;
+  }
+
+  .froggie img{
+    width: 100%;
   }
 }
 
@@ -343,8 +354,8 @@ touch_search{
 .all-5d {
   background-color: var(--Surface);
   margin: 10px;
-   margin-top: 5px;
-  border-radius: 5px 5px 5px 5px;
+   margin-top: 0px;
+  border-radius: 10px 10px 10px 10px;
   overflow: hidden;
   margin-bottom: 0;
 }
@@ -352,11 +363,10 @@ touch_search{
 [round-ui="true"] .all-24,
 [round-ui="true"] .all-5d{
   border-radius: 18px;
-       margin-top: 8px;
 }
 
 .all-24{
-  border-radius: 5px 5px  0 0 !important;
+  border-radius: 10px 10px  0 0 !important;
 }
 
 [round-ui="true"] .all-24{
@@ -365,7 +375,7 @@ touch_search{
 }
 
 .all-5d {
-  border-radius: 5px 5px 5px 5px;
+  border-radius: 10px;
 
 }
 [round-ui="true"] .all-5d{
@@ -380,14 +390,6 @@ touch_search{
   margin: 10px;
 }
 
-.forecast::-webkit-scrollbar {
-  height: 2px;
-}
-
-.forecast::-webkit-scrollbar-thumb {
-  background-color: var(--Primary);
-
-}
 
 
 .forecast #forecast24 {
@@ -463,7 +465,8 @@ touch_search{
   padding-left: 20px;
   padding-right: 20px;
   color: var(--On-Surface-Variant);
-  border-bottom: 1px solid var(--Outline-Variant);
+  border-bottom: 1px solid rgba(192, 192, 192, 0.25);
+
 
 }
 
@@ -488,6 +491,7 @@ touch_search{
 
 .icon-24 {
   width: 30px;
+  -webkit-user-drag: none;
   margin-top: 5px;
 }
 
@@ -572,6 +576,7 @@ touch_search{
 
 .forecast-5day div img {
   width: 35px;
+    -webkit-user-drag: none;
 }
 
 .disc-5d {
@@ -592,7 +597,7 @@ touch_search{
 
 .forecast-5day .forecast-item-forecast .daily_rain{
   color: #97cbff;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--google-mid);
   font-weight: 500;
   font-size: 14px;
   top: calc(13px + 25px);
@@ -848,7 +853,7 @@ touch_search{
 .all_air_quality {
   background-color: var(--Surface);
   margin: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
     margin-top: 0px;
 
 }
@@ -1066,9 +1071,6 @@ suggest-space{
 
 
 
-.froggie img{
-  width: 120%;
-}
 
 .froggie {
 background: linear-gradient(0deg, rgba(255, 0, 0, 0), var(--Secondary-Container) 100%);
@@ -1082,6 +1084,7 @@ background: linear-gradient(0deg, rgba(255, 0, 0, 0), var(--Secondary-Container)
   margin: 10px;
   border-radius: 0px;
   padding: 10px;
+  padding-top: 0px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -1100,7 +1103,7 @@ background: linear-gradient(0deg, rgba(255, 0, 0, 0), var(--Secondary-Container)
 }
 
 [round-ui="true"] .cloths div{
-  border-radius: 15px;
+  border-radius: 50px;
 
 }
 
@@ -1108,6 +1111,8 @@ background: linear-gradient(0deg, rgba(255, 0, 0, 0), var(--Secondary-Container)
   margin: 0;
   color: var(--On-Surface);
   margin-left: 10px;
+  margin-right: 10px;
+
 }
 
 .currentLocations{
@@ -1329,6 +1334,7 @@ sun{
   padding-top: 0;
   align-content: center;
   justify-items: center;
+  padding-bottom: 5px;
   gap: 10px;
 }
 
@@ -1338,7 +1344,7 @@ rainMeter{
   margin-top: 0px;
   margin-bottom: 0;
   background-color: var(--Surface);
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 10px 10px;
   display: block;
   padding-bottom: 10px;
 }
@@ -1468,21 +1474,22 @@ rainMeterBar{
 height: 100%;
 }
 
-.LiveMapWrap #livemapPreview img{
+
+.LiveMapWrap #livemapPreview{
   border-radius: 10px;
   width: 100%;
   height: 100px;
-  z-index: -1;
-  pointer-events: none;
+  /* z-index: -1; */
 }
 
-[round-ui="true"] .LiveMapWrap #livemapPreview img{
-  border-radius: 18px;
+[round-ui="true"] .LiveMapWrap #livemapPreview{
+  border-radius: 15px;
 
 }
 
 .LiveMapWrap #livemapPreview{
   height: 100px;
+  background-color: var(--Surface);
 }
 
 .LiveMapWrap{
@@ -1731,12 +1738,18 @@ flex{
   flex: 1;
 }
 
-savedLocationsHolder md-icon-button{
+savedLocationsHolder .delete-btn{
   flex-shrink: 0;
   z-index: 1;
   display: none;
   position: absolute;
   right: 15px;
+}
+
+savedLocationsHolder .refresh_saved_location{
+  flex-shrink: 0;
+  z-index: 1;
+  position: absolute;
 }
 
 savelocationtouch{
@@ -1759,7 +1772,7 @@ savelocationtouch md-ripple{
   padding-right: 10px;
   padding-bottom: 15px;
   background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
+  border-radius: 10px;
   padding-top: 15px;
   margin: 10px;
 }
@@ -1792,33 +1805,41 @@ savelocationtouch md-ripple{
   color: var(--On-Surface);
 }
 
-        .new_ver_download{
-            position: fixed;
-            bottom: 0;
-            z-index: 100000000000000000000000000000000000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 10px;
-            width: calc(100% - 40px);
-            background-color:var(--Inverse-Surface);
-            padding: 10px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            border-radius: 5px;
-        }
+  .new_ver_download{
+    color: rgb(236, 172, 51) !important;
+    opacity: 1;
+    animation: new_update 2s ease-out;
+  }
 
-        .new_ver_download md-text-button{
-            --md-sys-color-primary: var(--Inverse-Primary);
-        }
+  @keyframes new_update{
+    0%, 100%{
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    20%{
+      opacity: 1;
+      transform: scale(1);
 
-        .new_ver_download p{
-            color: var(--Inverse-On-Surface);
-            margin: 0;
-            font-size: 18px;
-            font-family: var(--outfit);
+    }
+    40%{
+      opacity: 0;
+      transform: scale(0.9);
 
-        }
+    }
+    60%{
+      opacity: 1;
+      transform: scale(1);
+    }
+    80%{
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100%{
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
 
 
 .currentConditionItem.humidity{
@@ -1936,6 +1957,7 @@ savelocationtouch md-ripple{
   display: flex;
   align-items: flex-end;
   gap: 5px;
+  margin-bottom: 6px;
 
 }
 
@@ -1948,13 +1970,14 @@ savelocationtouch md-ripple{
   padding-top: 35px;
   font-size: 16px;
   font-family: var(--outfit-mid);
+  padding-bottom: 0px;
 }
 
 .currentConditionItem.visibility .currentConditionItemVisibilityValue span{
   font-size: 18px;
   padding-bottom: 5px;
   position: absolute;
-  bottom: 17px;
+  bottom: 20px;
 }
 
 /* pressure */
@@ -2063,6 +2086,8 @@ savelocationtouch md-ripple{
   background-color: transparent;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
+    scroll-snap-align: start; /* Or center, depending on your layout */
+  scroll-snap-stop: always;
   overflow-x: auto;
   display: flex;
   margin: 10px;
@@ -2071,7 +2096,7 @@ savelocationtouch md-ripple{
   padding: 10px;
   padding-top: 0;
   padding-bottom: 0;
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 10px 10px;
 }
 
 [round-ui="true"] .insights{
@@ -2113,7 +2138,7 @@ savelocationtouch md-ripple{
 
 .holder_scroll_indi{
   position: absolute;
-  bottom: -2px;
+  bottom: 0;
   z-index: 99;
   left: 0;
   width: 100%;
@@ -2222,7 +2247,7 @@ space{
 
   content: '';
 
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
 
   height: 40%;
 
@@ -2302,6 +2327,7 @@ space{
 
 
 
+
 .currentConditionItem.moonSetRise{
 
   background-color: var(--Surface);
@@ -2326,65 +2352,37 @@ space{
 
 
 
-.currentConditionItem.moonSetRise .current_condition_icon{
+.currentConditionItem.moonSetRise
 
-  display: flex;
+.current_condition_icon {
 
-  align-self: center;
+  bottom: -5px;
 
-  justify-content: center;
-
-  width: 100%;
-
-  position: unset;
+  height: unset !important;
 
 }
 
 
 
+.moon_tracker img{
 
+  width: 30px;
 
-moonPhase {
-
-  width: 50px;
-
-  height: 50px;
-
-  display: block;
-
-  background: url(../icons/moon_texture.png);
-
-  border-radius: 9999px;
-
-  position: relative;
-
-  background-size: cover;
-
-  overflow: hidden;
-
-  background-position: center;
-
-  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
+  height: 30px;
 
 }
 
 
 
-moonPhaseProgress {
+.moon_tracker {
 
   position: absolute;
 
-  top: 0;
+  bottom: 20%;
 
-  width: 100%;
+  left: 0;
 
-  transition: width 0.2s ease-out;
-
-  height: 100%;
-
-  border-radius: 50%;
-
-  background-color: rgba(0, 0, 0, 0.65);
+  transform: translateY(-20%);
 
 }
 
@@ -2392,61 +2390,60 @@ moonPhaseProgress {
 
 
 
-#moonPhase_name{
+.currentConditionItem.moonSetRise::before{
 
-  font-size: 14px;
+  content: '';
 
-  color: var(--On-Surface);
+  background-color: rgba(0, 0, 0, 0.3);
 
-  font-family: var(--outfit);
-
-  margin: 0;
-
-  width: 100%;
-
-}
-
-
-
-.moondata_holder .moon_set_rise{
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
+  height: 40%;
 
   position: absolute;
 
   bottom: 0;
 
-  width: calc(100% - 20px);
+  left: 0;
 
-  padding: 10px;
+  width: 100%;
+
+  border-top: 1.5px solid var(--Outline);
+
+  z-index: 1;
 
 }
 
 
 
-.moondata_holder .moon_set_rise div{
+.moonset_moonrise_text_block{
+
+  position: absolute;
+
+  bottom: 10px;
+
+  left: 0;
+
+  width: 100%;
 
   display: flex;
 
   align-items: center;
 
-  flex-direction: column;
+  justify-content: center;
 
-  color: var(--On-Surface);
+  flex-direction: column;
 
   font-size: 13px;
 
+  color: white;
+  height: 38px;
 
+  z-index: 1;
 
 }
 
 
 
-.moondata_holder .moon_set_rise div md-icon{
+.moonset_moonrise_text_block div md-icon{
 
   font-size: 18px;
 
@@ -2454,12 +2451,30 @@ moonPhaseProgress {
 
 
 
-.moondata_holder .moon_set_rise div p{
+.moonset_moonrise_text_block div {
 
+  display: flex;
+
+  align-items: center;
+
+
+
+}
+
+
+
+.moonset_moonrise_text_block p{
+  color: var(--On-Surface);
+  font-family: var(--outfit);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 16px;
   margin: 0;
-
-  text-align: center;
-
+text-align: center;
+max-width: 80%;
 }
 
 
@@ -2483,18 +2498,16 @@ moonPhaseProgress {
 .pollen_data{
   margin: 10px;
   background-color: var(--Surface);
-  margin-bottom: 5px;
-  border-radius: 10px 10px 5px 5px;
+  margin-bottom: 0px;
+  border-radius: 10px;
   padding-bottom: 20px;
   margin-top: 0px;
 }
 [round-ui="true"] .pollen_data{
   border-radius: 18px;
-  margin-bottom: 8px !important;
 }
 
 [round-ui="true"] #ifPollenIsThere{
-      margin-bottom: 8px !important;
 }
 
 .available_pollen{
@@ -2590,6 +2603,10 @@ max-width: 150px;
     margin-left: auto;
 
   }
+    .floating_indications{
+      width: 50% !important;
+    }
+
 
   #search-container{
     display: block !important;
@@ -2605,6 +2622,24 @@ max-width: 150px;
 
   .close_search{
   display: none !important;
+  }
+  .behind_search_animation_wrap .behind_search_animation{
+    position: fixed;
+    z-index: 0;
+    height: auto !important;
+    width: 50% !important;
+    opacity: 0.7;
+    left: 50% !important;
+    top: -25px;
+  }
+  .behind_search_animation_wrap .behind_search_animation_fog{
+    position: fixed;
+    z-index: 0;
+    height: auto !important;
+    width: 50% !important;
+    left: 50% !important;
+    opacity: 0.8;
+    top: 10px;
   }
 }
 
@@ -2736,17 +2771,18 @@ Tempmeterbaritem span{
     position: relative;
     padding: 0;
     height: 0;
-    transition: all 0.2s ease-in;
+    transition: opacity 0.2s ease-in;
+    opacity: 0;
 }
 
 
 .temp_trend_bars.trends_opened{
     height: 250px;
   padding: 10px;
+  opacity: 1;
   border-top: 1px solid var(--Outline-Variant);
 
 }
-
 .temp_trend_bars canvas{
   width: 100%;
   height: 100%;
@@ -2772,7 +2808,7 @@ Tempmeterbaritem span{
 
 
 .currentConditionItem {
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.2);
 }
 
 .no_touch_screen{
@@ -2783,4 +2819,242 @@ Tempmeterbaritem span{
   position: fixed;
   left: 0;
   top: 0;
+}
+
+[round-ui="true"] #uvIndexMainDiv{
+}
+
+
+.view_device_location{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--Surface);
+  flex-direction: column;
+  gap: 10px;
+}
+
+.view_device_location p{
+  color: var(--Secondary);
+  margin: 0;
+  font-family: var(--google-mid);
+}
+
+.view_device_location span{
+  color: var(--On-Surface-Variant);
+  font-family: var(--google-normal);
+}
+
+.controls{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* move data  */
+
+.moving_data{
+  width: 100%;
+  height: 100%;
+  background-color: var(--Surface);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999;
+
+}
+
+.moving_data .info_text_migrate_data{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+  flex-direction: column;
+}
+
+.moving_data .info_text_migrate_data p{
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  color: var(--Primary);
+}
+
+.moving_data .info_text_migrate_data span{
+  color: var(--On-Surface-Variant);
+  margin-top: 5px;
+}
+
+.moving_data .info_text_migrate_data md-circular-progress{
+  margin-top: 20px;
+}
+
+.moving_data .data_base_created{
+    position: absolute;
+    bottom: 100px;
+    width: calc(100% - 20px);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  font-size: 18px;
+  color: var(--On-Surface);
+  padding-left: 20px;
+
+}
+
+
+.moving_data .data_base_created p{
+  margin: 0;
+  text-align: start;
+}
+
+/* Styling for the indicator container */
+.indicator-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--Inverse-Primary);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 50px;
+  gap: 5px;
+}
+
+.indicator-ball {
+  width: 10px;
+  height: 10px;
+  background-color: var(--Surface-Container-Low);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator-ball.active {
+  background-color: var(--Primary);
+}
+
+
+.floating_indications{
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000000000000000000000000000000000;
+  pointer-events: none;
+  animation: floating_indications 0.3s cubic-bezier(1,0,0,1);
+  transition: all 0.2s ease-out;
+
+}
+
+@keyframes floating_indications{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+
+}
+
+/* font sizes */
+
+
+[sys-font-size="medium_fontSize"] #weatherComments{
+  font-size: 16.5px !important;
+}
+
+[sys-font-size="medium_fontSize"] .weatherComments .summeryText{
+  font-size: 16.5px !important;
+}
+
+/* large */
+
+[sys-font-size="large_fontSize"] #weatherComments{
+  font-size: 17px !important;
+}
+
+[sys-font-size="large_fontSize"] .weatherComments .summeryText{
+  font-size: 17px !important;
+
+}
+
+.sortHolder{
+  gap: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+[round-ui="true"] .sortHolder{
+  gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.behind_search_animation_wrap .behind_search_animation{
+  position: fixed;
+  z-index: 0;
+  height: 32% !important;
+  opacity: 0.8;
+  top: -25px;
+}
+
+.behind_search_animation_wrap .behind_search_animation.default_opacity{
+  opacity: 1 !important;
+}
+
+.behind_search_animation_wrap .behind_search_animation::after{
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background: linear-gradient(0deg, transparent 80%, var(--Surface));
+}
+
+
+.behind_search_animation_wrap .header_hold{
+z-index: 5;
+box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+.behind_search_animation_wrap .behind_search_animation_fog{
+  position: fixed;
+  z-index: 0;
+  height: auto !important;
+  opacity: 0.8;
+  top: 10px;
+}
+
+.behind_search_animation_wrap .behind_search_animation_fog::after{
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: '';
+  background: linear-gradient(0deg, transparent 80%, var(--Surface));
+}
+
+#foreground_animation_sunny::before{
+  height: 0;
+  width: 0;
+}
+#background_animation_sunny::before{
+  height: 0;
+  width: 0;
 }

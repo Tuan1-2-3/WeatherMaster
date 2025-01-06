@@ -44,11 +44,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-const useSysFontPages = localStorage.getItem('useSysFont');
+const useSysFontPages = localStorage.getItem('SelectedAPPfont');
 
-if(useSysFontPages === 'true'){
-    document.documentElement.setAttribute('sys-font', 'true');
+if(useSysFontPages === 'roboto'){
+    document.documentElement.setAttribute('sys-font', 'roboto');
 } else{
-    document.documentElement.setAttribute('sys-font', 'false');
-
+    document.documentElement.setAttribute('sys-font', ' ');
 }
+
+const useFontSizePages = localStorage.getItem('SelectedAPPfontSize');
+
+
+
+if (useFontSizePages === 'large_fontSize') {
+    document.documentElement.setAttribute("sys-font-size", "large_fontSize");
+  } else if (useFontSizePages === 'medium_fontSize') {
+    document.documentElement.setAttribute("sys-font-size", "medium_fontSize");
+  } else {
+    document.documentElement.setAttribute("sys-font-size", "");
+  }

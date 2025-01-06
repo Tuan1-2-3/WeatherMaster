@@ -1,5 +1,5 @@
 <div align="center">
-   <img src="https://github.com/PranshulGG/WeatherMaster/blob/master/preview/partly_cloudy_day.svg" alt="" width="120px">
+   <img src="https://github.com/PranshulGG/WeatherMaster/blob/master/preview/readme_app_icon.svg" alt="" width="150px">
 </div>
 <h1 align="center">
  WeatherMaster
@@ -29,20 +29,20 @@
    <a href="https://apt.izzysoft.de/fdroid/index/apk/com.example.weathermaster"><img alt="GitHub" src="preview/download_Btn.png" height="80"/></a></div>
 <br>
 
-![app_thumbnail](preview/thumbnail.png)
+![app_thumbnail](preview/thumbnail_mat.png)
 
 # 👁️ Screenshots
 
 <div align="center">
-<img src="preview/current.png"  width="320">
-<img src="preview/24hr.png"  width="320">
-<img src="preview/radar_condi.png"  width="320">
-<img src="preview/uv_aqi.png"  width="320">
-<img src="preview/forecast_page.png"  width="320">
-<img src="preview/gov_alerts.png"  width="320">
-<img src="preview/settings.png"  width="320">
-<img src="preview/radar_page.png"  width="320">
-<img src="preview/condi_forecast.png"  width="320">
+<img src="preview/1.png"  width="250">
+<img src="preview/2.png"  width="250">
+<img src="preview/3.png"  width="250">
+<img src="preview/4.png"  width="250">
+<img src="preview/5.png"  width="250">
+<img src="preview/6.png"  width="250">
+<img src="preview/7.png"  width="250">
+<img src="preview/8.png"  width="250">
+<img src="preview/9.png"  width="250">
 
 </div>
 
@@ -81,6 +81,7 @@
 - ⭐ **Save Favorite Locations:** Save your preferred locations for quick access to their weather updates.
 - 👗 **Clothing Recommendations:** Get suggestions on what to wear based on the current weather conditions.
 - 🌾 **Pollen Data (Europe Only):** View pollen levels for grass, trees, and weeds in your area.
+- **⚙️ Customizable Layout:** Arrange and customize the app’s layout to display weather features in your preferred order and style. Example: Saved locations, condition widgets etc.
 
 # 🌞 Weather providers:
 - [**open-meteo**](https://open-meteo.com)

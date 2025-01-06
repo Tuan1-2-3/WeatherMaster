@@ -5,17 +5,21 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.InputType;
+import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -28,6 +32,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,8 +41,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.color.DynamicColors;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.BufferedReader;
@@ -81,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         webview = findViewById(R.id.webView);
+        webview.setBackgroundColor(getResources().getColor(R.color.diffDefault));
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -98,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         webview.addJavascriptInterface(new ShowToastInterface(this), "ToastAndroidShow");
         webview.addJavascriptInterface(new UpdateWidget1Interface(this), "UpdateWidget1Interface");
         webview.addJavascriptInterface(new ShowSnackInterface(this), "ShowSnackMessage");
-        webview.setBackgroundColor(getResources().getColor(R.color.diffDefault));
         webview.getSettings().setGeolocationEnabled(true);
         webSettings.setTextZoom(100);
 
@@ -106,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
         webview.getSettings().setAllowContentAccess(true);
         webview.getSettings().setDomStorageEnabled(true);
 
+
+
+
+
+        DynamicColors.applyToActivitiesIfAvailable(getApplication());
 
 
         webview.setWebChromeClient(new WebChromeClient() {
@@ -205,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
             if (isPullToRefreshAllowed) {
                 isPullToRefreshAllowed = false;
 
-                // Trigger the refresh action
                 webview.evaluateJavascript("refreshWeather();", null);
 
 
@@ -249,6 +261,11 @@ public class MainActivity extends AppCompatActivity {
 
             snackbarView.setBackgroundResource(R.drawable.snackbar_background);
 
+            TextView textView = snackbarView.findViewById(com.google.android.material.R.id.snackbar_text);
+            textView.setTextColor(ContextCompat.getColor(mContext, R.color.snackbar_text));
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            Typeface typeface = ResourcesCompat.getFont(mContext, R.font.outfit_medium);
+            textView.setTypeface(typeface);
 
             snackbar.setTextColor(ContextCompat.getColor(mContext, R.color.snackbar_text));
 
@@ -326,7 +343,9 @@ public class MainActivity extends AppCompatActivity {
 
             WidgetProviderSquareV2.updateWeatherWidgetSquareV2(mContext, condition, locationWeather, mainTemp, iconData, highLow, hour_0_temp, hour_0_icon, hour_0_time, hour_1_temp, hour_1_icon, hour_1_time, hour_2_temp, hour_2_icon, hour_2_time, hour_3_temp, hour_3_icon, hour_3_time);
 
+
         }
+
     }
 
 
@@ -385,15 +404,15 @@ public class MainActivity extends AppCompatActivity {
                         setTheme(R.style.blue_caret);
 
                     } else if(color.equals("cloudy")){
-                            statusBarColor = 0xFF001d33;
-                            navigationBarColor = 0xFF001d33;
+                            statusBarColor = 0xFF081938;
+                            navigationBarColor = 0xFF081938;
                             systemUiVisibilityFlags = 0;
                         webview.setBackgroundColor(getResources().getColor(R.color.C02d));
                         setTheme(R.style.blue_caret);
 
                     } else if(color.equals("overcast")){
-                        statusBarColor = 0xFF0e1d2a;
-                        navigationBarColor = 0xFF0e1d2a;
+                        statusBarColor = 0xFF0c1822;
+                        navigationBarColor = 0xFF0c1822;
                         systemUiVisibilityFlags = 0;
                         webview.setBackgroundColor(getResources().getColor(R.color.C03d));
                         setTheme(R.style.blue_caret);
@@ -413,8 +432,8 @@ public class MainActivity extends AppCompatActivity {
                         setTheme(R.style.blue_caret);
 
                     } else if(color.equals("snow")){
-                        statusBarColor = 0xFF1f1f30;
-                        navigationBarColor = 0xFF1f1f30;
+                        statusBarColor = 0xFF16161d;
+                        navigationBarColor = 0xFF16161d;
                         systemUiVisibilityFlags = 0;
                         webview.setBackgroundColor(getResources().getColor(R.color.C09d));
                         setTheme(R.style.blue_caret);
@@ -463,11 +482,20 @@ public class MainActivity extends AppCompatActivity {
                     } else if (color.equals("openUVcondition")){
                         openUVcondition();
                         return;
+                    } else if (color.equals("openMoonCondition")){
+                        openMoonCondition();
+                        return;
                     } else if (color.equals("AddLocationPage")){
                         OpenSearchPage();
                         return;
                     } else if (color.equals("OpenClothingPage")){
                         OpenClothingPage();
+                        return;
+                    } else if (color.equals("OpenAirQualityCondition")){
+                        openAirQualityCondition();
+                        return;
+                    } else if (color.equals("OpenGithubReleaseLatest")){
+                        openGithubReleases();
                         return;
                     } else if (color.equals("GoBack")) {
                         back();
@@ -546,6 +574,8 @@ public class MainActivity extends AppCompatActivity {
                 public void openSettingsActivity() {
             Intent intent = new Intent(mActivity, SettingsActivity.class);
                     mActivity.startActivity(intent);
+
+
         }
 
         public void openForecastPage(){
@@ -610,7 +640,28 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(mActivity, ClothingRecommendation.class);
             mActivity.startActivity(intent);
         }
+
+        public void openMoonCondition() {
+            Intent intent = new Intent(mActivity, MoonPhases.class);
+            mActivity.startActivity(intent);
+        }
+        public void openAirQualityCondition() {
+            Intent intent = new Intent(mActivity, AirQualityConditions.class);
+            mActivity.startActivity(intent);
+        }
     }
+
+    private void openGithubReleases() {
+        String fixedUrl = "https://github.com/PranshulGG/WeatherMaster/releases";
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(fixedUrl));
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No application available to open the link.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public void back() {
         onBackPressed();

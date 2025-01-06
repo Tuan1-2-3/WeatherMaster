@@ -5,8 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
 
     <application
         android:hardwareAccelerated="true"
@@ -18,8 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.WeatherMaster"
-        tools:targetApi="33"
-        >
+        tools:targetApi="33">
         <activity
             android:name=".SettingsActivity"
             android:screenOrientation="portrait"
@@ -66,7 +64,7 @@
             android:name=".LiveRadar"
             android:screenOrientation="portrait"
             android:exported="true"
-            android:theme="@style/ScreenLiveRadar"
+            android:theme="@style/yelloMainPage"
             />
         <activity
             android:name=".LanguagePage"
@@ -111,6 +109,18 @@
             android:theme="@style/yelloMainPage"
             />
         <activity
+            android:name=".MoonPhases"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/yelloMainPage"
+            />
+        <activity
+            android:name=".AirQualityConditions"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/yelloMainPage"
+            />
+        <activity
             android:name=".SearchPage"
             android:screenOrientation="portrait"
             android:exported="true"
@@ -118,6 +128,12 @@
             />
         <activity
             android:name=".Homelocations"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/yelloMainPage"
+            />
+        <activity
+            android:name=".WeatherModels"
             android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/yelloMainPage"
@@ -135,6 +151,12 @@
             android:theme="@style/yelloMainPage"
             />
         <activity
+            android:name=".ArrangeItems"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/yelloMainPage"
+            />
+        <activity
             android:name=".MainActivity"
             android:theme="@style/app_theme"
             android:screenOrientation="portrait"
@@ -146,22 +168,16 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".WeatherWidgetProvider" android:exported="true" android:label="@string/widget_description_1">
+
+        <receiver android:name=".WeatherWidgetProvider" android:exported="true" android:label="Date + current">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
-        </receiver>
-
-        <receiver android:name=".WidgetProviderRound" android:exported="true" android:label="Current round">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info_round" />
         </receiver>
 
         <receiver android:name=".WidgetProviderPill" android:exported="true" android:label="Current pill">
@@ -173,7 +189,7 @@
                 android:resource="@xml/widget_info_pill" />
         </receiver>
 
-        <receiver android:name=".WidgetProviderSquare" android:exported="true" android:label="Current square">
+        <receiver android:name=".WidgetProviderSquare" android:exported="true" android:label="Landscape 3x1">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -190,6 +206,16 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info_square_v2" />
         </receiver>
+        <receiver android:name=".WidgetProviderRound" android:exported="true" android:label="Current round">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_round" />
+        </receiver>
+
+
 
     </application>
 

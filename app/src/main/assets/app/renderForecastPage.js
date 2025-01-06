@@ -275,7 +275,7 @@ function aggregateHourlyData(hourlyData) {
 }
 
 
-function displayDailyForecast(forecast, forecastDaily) {
+async function displayDailyForecast(forecast, forecastDaily) {
     const forecastContainer = document.getElementById('foreCastList');
     const forecastDateHeader = document.createElement('forecastDateHeader');
     const forecastMainDetails = document.createElement('forecastMainDetails');
@@ -294,6 +294,7 @@ function displayDailyForecast(forecast, forecastDaily) {
         forecastContainer.innerHTML = '<p>No upcoming forecast data available.</p>';
         return;
     }
+    const weekDaysCache = JSON.parse(await customStorage.getItem('forecastWeekdays') || []);
 
 
     sortedDates.forEach((date, index) => {
@@ -304,15 +305,23 @@ function displayDailyForecast(forecast, forecastDaily) {
         const dateObj = new Date(date + 'T00:00:00');
 
         const isToday = date === todayString;
-        const weekday = isToday ? 'today' : dateObj.toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
+        const translatedWeekDays = weekDaysCache.map(day => {
+            return  [day][0];
+        });
 
+        const weekdayLang  = translatedWeekDays[index % translatedWeekDays.length];
 
-        const weekdayLang = getTranslationByLang(localStorage.getItem('AppLanguageCode'), weekday);
 
 
         const dailyData = forecastDaily[date];
 
-        const formattedDate = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'short' }).format(dateObj);
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+        const day = dateObj.getDate();
+        const month = months[dateObj.getMonth()];
+
+        const formattedDate = `${day} ${month}`;
 
         const rainPercentage = Math.round(forecast.precipitation_probability_max[index]) || '--';
 
@@ -391,7 +400,11 @@ function displayDailyForecast(forecast, forecastDaily) {
         if (SelectedPrecipitationUnit === 'in') {
             rainAmount = forecast.precipitation_sum[index] ? (forecast.precipitation_sum[index] * 0.0393701).toFixed(2) : '--';
             rainAmountUnit = 'in'
-
+        } else if (SelectedPrecipitationUnit === 'cm') {
+             rainAmount = forecast.precipitation_sum[index]
+                 ? (forecast.precipitation_sum[index] / 10).toFixed(2)
+                 : '--';
+            rainAmountUnit = 'cm'
         } else {
             rainAmount = forecast.precipitation_sum[index] ? forecast.precipitation_sum[index] : '--';
             rainAmountUnit = 'mm'
@@ -448,58 +461,58 @@ function displayDailyForecast(forecast, forecastDaily) {
         let UVindexIcon;
 
         if (uvIndex >= 0 && uvIndex <= 1) {
-            UVindexText = 'Minimal';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "minimal_forecast_uv");
             UVindexIcon = WidgetsUVindex.LowUV
         } else if (uvIndex > 1 && uvIndex <= 2) {
-            UVindexText = 'Low';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "low_forecast_uv");
             UVindexIcon = WidgetsUVindex.LowUV
 
         } else if (uvIndex > 2 && uvIndex <= 3) {
-            UVindexText = 'Low';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "low_forecast_uv");
             UVindexIcon = WidgetsUVindex.LowUV
 
         } else if (uvIndex > 3 && uvIndex <= 4) {
-            UVindexText = 'Moderate';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "moderate_forecast_uv");
             UVindexIcon = WidgetsUVindex.MidUV
 
         } else if (uvIndex > 4 && uvIndex <= 5) {
-            UVindexText = 'Moderate';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "moderate_forecast_uv");
             UVindexIcon = WidgetsUVindex.MidUV
 
         } else if (uvIndex > 5 && uvIndex <= 6) {
-            UVindexText = 'Moderate';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "moderate_forecast_uv");
             UVindexIcon = WidgetsUVindex.MidUV
 
         } else if (uvIndex > 6 && uvIndex <= 7) {
-            UVindexText = 'High';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "high_forecast_uv");
             UVindexIcon = WidgetsUVindex.HighUV
 
         } else if (uvIndex > 7 && uvIndex <= 8) {
-            UVindexText = 'High';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "high_forecast_uv");
             UVindexIcon = WidgetsUVindex.HighUV
 
         } else if (uvIndex > 8 && uvIndex <= 9) {
-            UVindexText = 'Very high';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "very_high_forecast_uv");
             UVindexIcon = WidgetsUVindex.VeryHighUV
 
         } else if (uvIndex > 9 && uvIndex <= 10) {
-            UVindexText = 'Very high';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "very_high_forecast_uv");
             UVindexIcon = WidgetsUVindex.VeryHighUV
 
         } else if (uvIndex > 10 && uvIndex <= 11) {
-            UVindexText = 'Very high';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "very_high_forecast_uv");
             UVindexIcon = WidgetsUVindex.VeryHighUV
 
         } else if (uvIndex > 11 && uvIndex <= 12) {
-            UVindexText = 'Extreme';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "extreme_forecast_uv");
             UVindexIcon = WidgetsUVindex.ExtremeUV
 
         } else if (uvIndex > 12 && uvIndex <= 13) {
-            UVindexText = 'Extreme';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "extreme_forecast_uv");
             UVindexIcon = WidgetsUVindex.ExtremeUV
 
         } else if (uvIndex > 13) {
-            UVindexText = 'Extreme';
+            UVindexText = getTranslationByLang(localStorage.getItem("AppLanguageCode"), "extreme_forecast_uv");
             UVindexIcon = WidgetsUVindex.ExtremeUV
 
         }
@@ -564,7 +577,7 @@ function displayDailyForecast(forecast, forecastDaily) {
             forecastTempConditionMainContent.innerHTML = `
 
             <div class="top-details">
-                <p>${weekdayLang}, ${formattedDate}</p>
+                <p>${weekdayLang}</p>
                 <div>
                 <tempLarge><p>${TemperatureMax}° </p> <span>/${TemperatureMin}°</span></tempLarge>
                 <img src="${GetWeatherIcon(DailyWeatherCode, 1)}">
@@ -573,14 +586,19 @@ function displayDailyForecast(forecast, forecastDaily) {
             </div>
 
 
-            <p class="daily-conditions-title" data-translate="daily_condtions">Daily conditions</p>
-            <div class="daily-conditions">
-            <div class="daily-conditions-wrap">
+            <p class="daily-conditions-title" data-translate="daily_conditions">Daily conditions</p>
+            <div class="daily-conditions" style="position: relative;">
+                                <div class="loader_content" hidden>
+                        <md-circular-progress indeterminate></md-circular-progress>
 
-                     <div class="currentConditionItem sunRISESET ripple_btn_low"
+                    </div>
+
+            <div class="daily-conditions-wrap" id="sortableContainer">
+
+                     <div class="currentConditionItem sunRISESET ripple_btn_low" data-id="1"
                         >
                         <div class="currentConditionItemTitle"><i icon-filled>wb_twilight</i><span
-                                data-translate="sun">Sun</span></div>
+                                data-translate="sun_tile_page" style="width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 17px;">Sun</span></div>
 
                         <div class="current_condition_icon">
                             <svg height="110.0dip" width="176.0dip" viewBox="0 0 176.0 110.0"
@@ -611,7 +629,7 @@ function displayDailyForecast(forecast, forecastDaily) {
 
 
 
-                    <div class="currentConditionItem pressure ripple_btn_low"
+                    <div class="currentConditionItem pressure ripple_btn_low" data-id="2"
                        >
 
                         <div class="current_condition_icon" id="pressure_icon_svg">
@@ -630,9 +648,9 @@ function displayDailyForecast(forecast, forecastDaily) {
 
 
 
-                                       <div class="currentConditionItem humidity ripple_btn_low"
+                                       <div class="currentConditionItem humidity ripple_btn_low" data-id="3"
                         >
-                        <div class="currentConditionItemTitle"><i icon-filled>rainy_light</i><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 105px;"
+                        <div class="currentConditionItemTitle"><i icon-filled>rainy_light</i><span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 105px; font-size: 17px;"
                                 data-translate="precipitation">Precipitation</span></div>
 
 
@@ -648,7 +666,7 @@ function displayDailyForecast(forecast, forecastDaily) {
 
                     </div>
 
-                                        <div class="currentConditionItem pressure ripple_btn_low" style="background-color: transparent;"
+                                        <div class="currentConditionItem pressure ripple_btn_low" style="background-color: transparent;" data-id="4"
                        >
 
                         <div class="current_condition_icon" id="pressure_icon_svg">
@@ -659,7 +677,7 @@ function displayDailyForecast(forecast, forecastDaily) {
                             <div style="padding-bottom: 0px;"><i icon-filled>light_mode</i><span
                                     data-translate="uv_index" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 80px;">UV index</span></div>
                             <p id="pressure_text_main">${uvIndex}</p>
-                            <span id="pressureMainUnit" style="padding-bottom: 10px; font-size: 14px;">${UVindexText}</span>
+                            <span id="pressureMainUnit" style="padding-bottom: 10px; font-size: 14px; overflow: hidden; text-overflow: ellipsis; width: 65px; text-align: center; white-space: nowrap;">${UVindexText}</span>
                         </div>
 
 
@@ -667,9 +685,9 @@ function displayDailyForecast(forecast, forecastDaily) {
 
 
 
-                                        <div class="currentConditionItem visibility ripple_btn_low"
-                        onclick="sendThemeToAndroid('openVisibilityCondition')">
-                        <div class="currentConditionItemTitle visibility"><i icon-filled>air</i><span
+                                        <div class="currentConditionItem visibility ripple_btn_low" data-id="5"
+                        >
+                        <div class="currentConditionItemTitle visibility"><i icon-filled>air</i><span data-translate="wind"
                                 >Wind</span></div>
 
                         <div class="current_condition_icon">
@@ -695,10 +713,10 @@ function displayDailyForecast(forecast, forecastDaily) {
                     </div>
 
 
-                   <div class="currentConditionItem humidity ripple_btn_low"
+                   <div class="currentConditionItem humidity ripple_btn_low" data-id="6"
                         >
                         <div class="currentConditionItemTitle"><i icon-filled>humidity_high</i><span
-                                data-translate="humidity" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 105px;">Humidity</span></div>
+                                data-translate="humidity" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 105px; font-size: 17px;">Humidity</span></div>
 
                         <div class="current_condition_icon" id="humidity_icon_svg">
                             ${humidityValue}
@@ -716,7 +734,7 @@ function displayDailyForecast(forecast, forecastDaily) {
                     </div>
 
 
-                         <div class="currentConditionItem pressure ripple_btn_low" style="background-color: transparent;"
+                         <div class="currentConditionItem pressure ripple_btn_low" style="background-color: transparent;" data-id="7"
                        >
 
                         <div class="current_condition_icon" id="pressure_icon_svg">
@@ -743,6 +761,7 @@ function displayDailyForecast(forecast, forecastDaily) {
 
             `
 
+
             if (!forecastMainDetails.contains(forecastTempConditionMainContent)) {
                 forecastMainDetails.appendChild(forecastTempConditionMainContent);
             }
@@ -757,7 +776,27 @@ function displayDailyForecast(forecast, forecastDaily) {
         }
 
 
-        forecastDateHeaderContent.addEventListener('click', handleSelection);
+        let debounceTimeout;
+        let debounceTimeout2;
+
+
+forecastDateHeaderContent.addEventListener('click', (event) =>{
+    handleSelection(event)
+    document.querySelector('.loader_content').hidden = false;
+    clearTimeout(debounceTimeout);
+    clearTimeout(debounceTimeout2);
+
+        debounceTimeout2 = setTimeout(() =>{
+            initializeDragAndDrop();
+        }, 250);
+
+    debounceTimeout = setTimeout(() =>{
+        initializeDragAndDrop();
+        document.querySelector('.loader_content').hidden = true;
+
+    }, 500);
+
+});
         const clickedForecastItem = localStorage.getItem('ClickedForecastItem') || '0';
         const selectedForecastIndex = parseInt(clickedForecastItem, 10);
 
@@ -786,6 +825,10 @@ function displayDailyForecast(forecast, forecastDaily) {
             }
         }
     });
+          setTimeout(() =>{
+                    initializeDragAndDrop();
+                }, 300);
+
 }
 
 
@@ -817,8 +860,53 @@ setTimeout(() => {
 }, 2300);
 
 
+let sortableInstanceContent;
 
+async function initializeDragAndDrop() {
+    const draggableContainer = document.getElementById('sortableContainer');
+    const storageKey = 'dragAndDropStateForecast';
 
+    async function saveOrder() {
+        const itemsOrder = Array.from(draggableContainer.children).map(element => element.dataset.id);
+        await customStorage.setItem(storageKey, JSON.stringify(itemsOrder));
+    }
 
+    async function loadOrder() {
+        const storedState = await customStorage.getItem(storageKey);
+        if (storedState) {
+            const itemsOrder = JSON.parse(storedState);
+            const elements = Array.from(draggableContainer.children);
 
+            itemsOrder.forEach(id => {
+                const element = elements.find(el => el.dataset.id === id);
+                if (element) {
+                    draggableContainer.appendChild(element);
+                }
+            });
+        }
+    }
+  let timeoutID;
+  if (sortableInstanceContent) {
+    sortableInstanceContent.destroy();
+  }
 
+     sortableInstanceContent = new Sortable(draggableContainer, {
+        animation: 250,
+        ghostClass: 'sortable-ghost',
+        delay: 500,
+        onStart(evt) {
+
+          evt.item.classList.add('noSwipe');
+      },
+        onEnd(evt) {
+          clearTimeout(timeoutID);
+
+          timeoutID = setTimeout(() => {
+            evt.item.classList.remove('noSwipe');
+          }, 200);
+            saveOrder();
+        },
+    });
+
+    await loadOrder();
+  }
